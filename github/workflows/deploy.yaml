@@ -1,0 +1,27 @@
+name: deploy nodes app on aws with the help of Github Actions CI CD
+
+on:
+  push:
+    branches:
+      - main
+    
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: deploy via ssh                          #this step will deploy your application on the server using SSH
+        uses: appleboy/ssh-deploy@v1.0.3               #this action will connect to your server via SSH and execute the commands specified in the script section
+        with:
+          host: ${{ secrets.SSH_HOST }}                    #this is the IP address of your  AWS server
+          username: root                                   #this is the username of your server, in most cases it is root
+          key: {{ secrets.SSH_KEY}}                        #this is the SSH_kEYGEN
+          script: |
+            cd /root/GitHub-Actions-Node.js-Application-with-CI-CD           #this is the path where your project is located on the server
+            git pull                                                         #this command will pull the latest changes from the main branch of your repository
+            docker-compose down                                              #this command will stop and remove the existing containers
+            docker-compose up -d --build                                     #this command will build the new image and start the containers in detached mode
