@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: deploy via ssh                          #this step will deploy your application on the server using SSH
-        uses: appleboy/ssh-deploy@v1.0.3               #this action will connect to your server via SSH and execute the commands specified in the script section
+        uses: appleboy/ssh-action@v1.0.10              #this action will connect to your server via SSH and execute the commands specified in the script section
         with:
           host: ${{ secrets.SSH_HOST }}                    #this is the IP address of your  AWS server
           username: root                                   #this is the username of your server, in most cases it is root
