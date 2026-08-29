@@ -143,6 +143,7 @@ vite.config.ts.timestamp-*
 .vite/
 
 
-
-.private
-.private.pub
+# SSH Keys - NEVER commit private keys
+private
+private.pub
+*.pem
